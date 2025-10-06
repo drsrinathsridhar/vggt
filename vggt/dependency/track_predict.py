@@ -20,6 +20,7 @@ def predict_tracks(
     max_points_num=163840,
     fine_tracking=True,
     complete_non_vis=True,
+    conf_thresh_percent=50.0,  # new parameter to control confidence thresholding
 ):
     """
     Predict tracks for the given images and masks.
@@ -92,6 +93,7 @@ def predict_tracks(
             max_points_num,
             fine_tracking,
             device,
+            conf_thresh_percent=conf_thresh_percent,
         )
 
         pred_tracks.append(pred_track)
