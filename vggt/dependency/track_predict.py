@@ -203,7 +203,6 @@ def _forward_on_query(
         else:
             valid_mask = np.ones(pred_conf.shape[0], dtype=bool)
 
-        print(f'valid_mask.sum():', valid_mask.sum())
         if valid_mask.sum() > 512:
             query_points = query_points[:, valid_mask]  # Make sure shape is compatible
             pred_conf = pred_conf[valid_mask]
