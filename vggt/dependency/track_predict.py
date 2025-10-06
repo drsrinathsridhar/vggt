@@ -174,7 +174,6 @@ def _forward_on_query(
     query_image = images[query_index]
     query_points = extract_keypoints(query_image, keypoint_extractors, round_keypoints=False)
     query_points = query_points[:, torch.randperm(query_points.shape[1], device=device)]
-    print(f'Extracted keypoints: ', query_points)
 
     # Extract the color at the keypoint locations
     query_points_long = query_points.squeeze(0).round().long()
@@ -203,7 +202,8 @@ def _forward_on_query(
             valid_mask = pred_conf > conf_thresh
         else:
             valid_mask = np.ones(pred_conf.shape[0], dtype=bool)
-        
+
+        print(f'valid_mask.sum():', valid_mask.sum())
         if valid_mask.sum() > 512:
             query_points = query_points[:, valid_mask]  # Make sure shape is compatible
             pred_conf = pred_conf[valid_mask]
