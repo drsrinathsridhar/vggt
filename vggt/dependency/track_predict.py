@@ -197,7 +197,7 @@ def _forward_on_query(
         # should I export this as an input parameter?
         # valid_mask = pred_conf > 1.2
         if conf_thresh_percent > 0:
-            conf_thresh = np.percentile(conf[query_index].cpu().numpy(), conf_thresh_percent)
+            conf_thresh = np.percentile(conf[query_index], conf_thresh_percent)
             valid_mask = pred_conf > conf_thresh
         else:
             valid_mask = np.ones(pred_conf.shape[0], dtype=bool)
