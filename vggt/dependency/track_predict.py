@@ -143,6 +143,7 @@ def _forward_on_query(
     max_points_num,
     fine_tracking,
     device,
+    conf_thresh_percent=50.0,
 ):
     """
     Process a single query frame for track prediction.
@@ -192,7 +193,13 @@ def _forward_on_query(
 
         # heuristic to remove low confidence points
         # should I export this as an input parameter?
-        valid_mask = pred_conf > 1.2
+        # valid_mask = pred_conf > 1.2
+        if conf_thresh_percent > 0:
+            conf_thresh = np.percentile(conf[query_index].cpu().numpy(), conf_thresh_percent)
+            valid_mask = pred_conf > conf_thresh
+        else:
+            valid_mask = np.ones(pred_conf.shape[0], dtype=bool)
+        
         if valid_mask.sum() > 512:
             query_points = query_points[:, valid_mask]  # Make sure shape is compatible
             pred_conf = pred_conf[valid_mask]
