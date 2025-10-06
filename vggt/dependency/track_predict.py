@@ -198,6 +198,7 @@ def _forward_on_query(
         # valid_mask = pred_conf > 1.2
         if conf_thresh_percent > 0:
             conf_thresh = np.percentile(conf[query_index], conf_thresh_percent)
+            print('conf_thresh correspondin to ' + conf_thresh_percent + '% is: ', conf_thresh)
             valid_mask = pred_conf > conf_thresh
         else:
             valid_mask = np.ones(pred_conf.shape[0], dtype=bool)
